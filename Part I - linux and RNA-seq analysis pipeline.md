@@ -27,30 +27,30 @@ wget http://hgdownload.soe.ucsc.edu/goldenPath/felCat9/bigZips/genes/felCat9.ref
 gunzip -d felCat9.refGene.gtf.gz
 ```
 
-2.How many rows in that gtf file?  
+2.How many rows in that gtf file?    
 (8487 felCat9.refGene.gtf)  
   
-3.How to extract the first 10 rows of the file?
+3.How to extract the first 10 rows of the file?  
 (try "head")  
   
-4.Save all "CDS" transcript information to a new file called "CDS.txt". 
+4.Save all "CDS" transcript information to a new file called "CDS.txt".  
 (try "grep" and ">" )  
   
-5.print out the first column (ChromosomeID) of file CDS.txt.
+5.print out the first column (ChromosomeID) of file CDS.txt.  
 (try "cut")
 
 5.search keyword "gene" in gtf file , why the result from "grep -c" and "grep -o \*\*|wc -l" are different?  
 ($grep -c "gene" felCat9.refGene.gtf, 8487; $grep -o "gene" felCat9.refGene.gtf|wc -l, 16974)  
 
-6.How many kind of transcript listed in the gtf file? and what's the number size of each kind of transcript respectively?
+6.How many kind of transcript listed in the gtf file? and what's the number size of each kind of transcript respectively?  
 (combine "grep" "sort" and "uniq" together; 6)  
   
-7.use vim editor to add a header at the first line  of gtf file.
+7.use vim editor to add a header at the first line  of gtf file.  
 ("vim" and "I" to get access to the editing mode."Esc" to the control mode,":wq" to save and quit)  
   
 8.Jump to line 1000 of gtf file in vim editor  
   
-9. replace all "refGene" with "CatRef".
+9. replace all "refGene" with "CatRef".  
 (try "vim" or "sed")
 
 10.delete gtf file and the txt file.  
