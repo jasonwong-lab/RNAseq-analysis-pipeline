@@ -49,7 +49,7 @@ gunzip -d felCat9.refGene.gtf.gz
 ("vim" and "I" to get access to the editing mode."Esc" to the control mode,":wq" to save and quit)  
   
 8.Jump to line 1000 of gtf file in vim editor  
-  
+
 9. replace all "refGene" with "CatRef".  
 (try "vim" or "sed")
 
