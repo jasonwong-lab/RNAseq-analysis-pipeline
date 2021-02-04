@@ -19,7 +19,7 @@ The **shell** acts as an interface between the user and the kernel. Most Linux d
 *************************************************************
 
 ### linux_practice(opinional) 
-(provide hints and answer from the example file only)
+(provide hints and answer from the example file only)  
 
 1. Download a gtf file for plactise; or you can use any other gtf file you have.
 ```
