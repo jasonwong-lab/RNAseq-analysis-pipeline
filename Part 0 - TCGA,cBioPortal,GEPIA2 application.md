@@ -1,4 +1,4 @@
-## Part 0: TCGA,cBIoportal,GEPIA2 application
+## Part 0: TCGA,cBioPortal,GEPIA2 application
 
 ### The Cancer Genome Atlas Program (TCGA)  
 https://portal.gdc.cancer.gov/   
