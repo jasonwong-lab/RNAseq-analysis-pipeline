@@ -62,7 +62,7 @@ https://www.cbioportal.org/
 ![image](https://github.com/leiwaaping/bioinformatic-basic-practices/blob/main/pics/cbioportal0.png)  
 
 **Task1：check TP53 gene mutations happened in all cancer.**  
-"Quick search" —— select "TP53" in —— "Mutations", you can search keyword to selected cancer type.
+"Quick search" —— select "TP53" in —— "Mutations", you can search keyword to selected cancer type.  
 ![image](https://github.com/leiwaaping/bioinformatic-basic-practices/blob/main/pics/cbioportal02.png)   
   
 **Task2：What is the most common hotspot point mutation in KRAS in lung cancer?.**   
@@ -77,7 +77,7 @@ Q2: How many samples are supporting this hostpot point mutation? how to get deta
 **************************************  
 
 **Task3：use cbioportal to look at difference in survival for lung cancer patients with TP53 and/or KRAS mutations .**   
-"Query" —— select "Lung" —— select study *Lung Adenocarcinoma(TCGA,Nature 2014)* —— "Query By Gene" 
+"Query" —— select "Lung" —— select study *Lung Adenocarcinoma(TCGA,Nature 2014)* —— "Query By Gene"  
 unselect "Putative CNA from GISTIC" —— type KRAS and TP53 in *Enter Genes* —— "Submit Query"  —— "Survival"  , Not statistical significant in survival analysis   
 ![image](https://github.com/leiwaaping/bioinformatic-basic-practices/blob/main/pics/cbioportal05.png)  
 
