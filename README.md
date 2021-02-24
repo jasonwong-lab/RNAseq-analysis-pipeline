@@ -16,7 +16,7 @@ You can search and get to know some background knowledge before starting this pr
 3. What is the format for fastq file and gtf file?
 4. Introduce the TCGA database in your own words.  
 
-## Do analysis with Database and online tools 
+## Do analysis with database and online tools 
 Part 0: TCGA,cBIoportal,GEPIA2 application  
 
 ## Coding practices
