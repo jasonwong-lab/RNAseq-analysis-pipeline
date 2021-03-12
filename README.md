@@ -10,7 +10,7 @@ You can search and get to know some background knowledge before starting this pr
 - Gene
 - Gene expression (it is a relative value or absolute value?)
 - SNP
-- germline Mutation & somatic mutation 
+- germline mutation & somatic mutation 
 
 2. Explain the principle of high throughput sequencing（like illumina) in your own words.
 3. What is the format for fastq file and gtf file?
