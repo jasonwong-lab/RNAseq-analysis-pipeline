@@ -49,19 +49,21 @@ gunzip -d felCat9.refGene.gtf.gz
 10.replace all "refGene" with "CatRef".  
 (try "vim" or "sed")
 
-
+  
+    
+    
   
 ## Analysis on a patient cohort.  
 
-### understand the data  (biomed1 server ~/data/fastq/Genie_9.0/)  
-======================================================  
+### understand the data  (biomed1 server ~/data/fastq/Genie_9.0/)   
+
+************************************************************* 
 What information are involved in each column/row in every file?  
 How to define "patient" and "sample"?  
 How to merge sample and patient information?  
 How to search/locate a target SNP?  
 What is the difference between germline mutation and somatic mutation?  
-
-======================================================
+*************************************************************
 
 *Document:data_guide.pdf;  
 Sample information: data_clinical_patient.txt; data_clinical_sample.txt;  
