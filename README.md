@@ -19,7 +19,8 @@ You can search and get to know some background knowledge before starting this pr
 ## Do analysis with database and online tools 
 Part 0: TCGA,cBIoportal,GEPIA2 application  
 
-## Coding practices
-Part I: LINUX + RNA-seq analysis pipeline  
+## Coding practices  
+Part 0.5: LINUX and practices
+Part I: RNA-seq analysis pipeline  
 Pert II: R + Differential expression analysis basic plots
 
