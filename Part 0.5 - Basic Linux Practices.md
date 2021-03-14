@@ -65,8 +65,8 @@ How to search/locate a target SNP?
 What is the difference between germline mutation and somatic mutation?  
 *************************************************************
 
-**Documents**
-*Document:data_guide.pdf;*  
+**Documents**  
+*introduction:data_guide.pdf;*  
 *Sample information: data_clinical_patient.txt; data_clinical_sample.txt;*    [clinical format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#clinical-data)  
 *Mutation information: data_mutations_extended.txt;*  [MAF format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#mutation-data)   
   
