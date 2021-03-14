@@ -119,7 +119,7 @@ points for discussion：
 
 ```
 ##calculate the number of each cancer typ,remember to keep Primary tumor samples only.  (Variant_Tpye)
-grep "Primary tumor" data_clinical_sample.txt >Primary_tumor_tmp.txt
+grep -v "#" data_clinical_sample.txt |grep "Primary tumor" >Primary_tumor_tmp.txt
 cut -f 4 Primary_tumor_tmp.txt|sort|uniq -c|sort -rnk1|head  
 
 ##merge sample data with patient data  
