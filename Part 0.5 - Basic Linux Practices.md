@@ -68,7 +68,9 @@ What is the difference between germline mutation and somatic mutation?
 **Documents**
 *Document:data_guide.pdf;*  
 *Sample information: data_clinical_patient.txt; data_clinical_sample.txt;*    [clinical format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#clinical-data)  
-*Mutation information: data_mutations_extended.txt;*  [MAF format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#mutation-data)  
+*Mutation information: data_mutations_extended.txt;*  [MAF format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#mutation-data)   
+  
+  
 
 **Task 1: complete the following clinical form**  
 
@@ -85,14 +87,24 @@ summary the Primary tumor samples
 *************************  
 points for discussion：  
 1. How to get all answers(from multi-cancer types) in one command line.  
-2. why the total number of femal and male not equal to the total size? how to deal with those extra samples?   
-*************************  
+2. why the total number of female and male not equal to the total size? how to deal with those extra samples?    
 
 **challenge 1: Will gender will impact the reported Age in those 6 types of cancer?**  
 
+*************************
 
+  
+  
+  
+**Task 2: basic statistical analysis on mutation data**   
 
+- Which gene with the most mutations?  
+- How many shared SNP(found in more than 1 sample) among samples?  （take Tumor_Seq_Allele1 as allele)  
 
+***************************  
+
+**challenge 2: How is the Variant_Tpye distrubution among the top 10 most mutated genes?**  
+**********************
 
 
 
@@ -106,7 +118,7 @@ points for discussion：
 **Task 1**  
 
 ```
-##calculate the number of each cancer type  
+##calculate the number of each cancer typ,remember to keep Primary tumor samples only.  (Variant_Tpye)
 grep "Primary tumor" data_clinical_sample.txt >Primary_tumor_tmp.txt
 cut -f 4 Primary_tumor_tmp.txt|sort|uniq -c|sort -rnk1|head  
 
@@ -122,8 +134,33 @@ grep "LUAD" Gender_tmp.txt |cut -d " "  -f 5 |sort |uniq -c
 #PRAD  
 #PAAD  
 #BLCA  
+#head -1 data_clinical_patient.txt
+#Patient Identifier	Sex	Primary Race	Ethnicity Category	Center  
+#head -1 Primary_tumor_tmp.txt 
+#Patient Identifier	Sample Identifier	Age at Which Sequencing was Reported	Oncotree Code	Sample Type	Sequence Assay ID	Cancer Type	Cancer Type Detailed	Sample Type Detailed  
 for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt Primary_tumor_tmp.txt |grep "$i" |cut -d " " -f 5|sort|uniq -c;done  
+```  
+
+**Task 2**  
+
 ```
+##keep "SNP" data only  
+grep "SNP" data_mutations_extended.txt >SNP_tmp.txt  
+
+##calculate mutation in each gene. In fact, the gene length should be considered as well （but not in here)  
+cut -f 1 SNP_tmp.txt |sort|uniq -c |sort -rnk1|head  
+
+##extract SNP by position and Sample information only, exclude the SNP from the same sample
+cut -f 5,6,7,12,13,17 SNP_tmp.txt |wc -l
+(727146)
+cut -f 5,6,7,12,13,17 SNP_tmp.txt |sort|uniq |wc -l
+727030  
+```
+
+
+
+
+
 
 
 
