@@ -82,14 +82,13 @@ summary the Primary tumor samples
 | COAD  | 4089 |    |    |
 | PRAD  | 2233 |    |    |
 | PAAD  | 2105 |    |    |
-| BLAC  | 1494 |    |    | 
 
 *************************  
 points for discussion：  
 1. How to get all answers(from multi-cancer types) in one command line.  
 2. why the total number of female and male not equal to the total size? how to deal with those extra samples?    
 
-**challenge 1: Will gender will impact the reported Age in those 6 types of cancer?**  
+**challenge 1: Will the elder become riskier in getting specific cancer or getting metastasis?**  
 
 *************************
 
@@ -99,7 +98,7 @@ points for discussion：
 **Task 2: basic statistical analysis on mutation data**   
 
 - Which gene with the most mutations?  
-- How many shared SNP(found in more than 1 sample) among samples?  （take Tumor_Seq_Allele1 as allele)  
+- How many shared SNP(found in more than 1 sample) among all samples?  （take Tumor_Seq_Allele1 as allele)  
 
 ***************************  
 
@@ -132,12 +131,11 @@ grep "LUAD" Gender_tmp.txt |cut -d " "  -f 5 |sort |uniq -c
 #IDC  
 #COAD  
 #PRAD  
-#PAAD  
-#BLCA  
+#PAAD   
 #head -1 data_clinical_patient.txt
 #Patient Identifier	Sex	Primary Race	Ethnicity Category	Center  
 #head -1 Primary_tumor_tmp.txt 
-#Patient Identifier	Sample Identifier	Age at Which Sequencing was Reported	Oncotree Code	Sample Type	Sequence Assay ID	Cancer Type	Cancer Type Detailed	Sample Type Detailed  
+#PATIENT_ID	SAMPLE_ID	AGE_AT_SEQ_REPORT	ONCOTREE_CODE	SAMPLE_TYPE	SEQ_ASSAY_ID	CANCER_TYPE	CANCER_TYPE_DETAILESAMPLE_TYPE_DETAILED 
 for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt Primary_tumor_tmp.txt |grep "$i" |cut -d " " -f 5|sort|uniq -c;done  
 ```  
 
@@ -148,14 +146,46 @@ for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR
 grep "SNP" data_mutations_extended.txt >SNP_tmp.txt  
 
 ##calculate mutation in each gene. In fact, the gene length should be considered as well （but not in here)  
-cut -f 1 SNP_tmp.txt |sort|uniq -c |sort -rnk1|head  
+cut -f 1 SNP_tmp.txt |sort|uniq -c |sort -rnk1|head   
 
-##extract SNP by position and Sample information only, exclude the SNP from the same sample
-cut -f 5,6,7,12,13,17 SNP_tmp.txt |wc -l
-(727146)
-cut -f 5,6,7,12,13,17 SNP_tmp.txt |sort|uniq |wc -l
-727030  
+#target SNP by position and Sample information only  
+cut -f 5,6,7,12,13,17 SNP_tmp.txt |wc -l  
+(727146)  
+#exclude the SNP from the same sample
+cut -f 5,6,7,12,13,17 SNP_tmp.txt |sort|uniq |wc -l  
+(727030)    
+#remove sample information, get all shared SNP.
+
+
 ```
+
+**challenge 1**  
+```
+#in R  
+library(ggplot2)  
+
+#merge sample and patient information  
+sample <- as.data.frame(read.table("data_clinical_sample.txt",header = TRUE,sep = "\t", dec = ".",stringsAsFactors=FALSE,check.names = FALSE))   
+patients <- as.data.frame(read.table("data_clinical_patient.txt",header = TRUE,sep = "\t", dec = ".",stringsAsFactors=FALSE,check.names = FALSE))  
+dat<-merge(sample,patients[,c("PATIENT_ID","SEX")],by="PATIENT_ID",all.x=TRUE)  
+dim(dat)  
+
+#select target cancer type  
+#dat=subset(dat,ONCOTREE_CODE=="LUAD"|ONCOTREE_CODE=="IDC"|ONCOTREE_CODE=="COAD"|ONCOTREE_CODE=="PRAD"|ONCOTREE_CODE=="PAAD")  
+dat=subset(dat,ONCOTREE_CODE=="LUAD")  #take LUAD cancer as an example  
+dat$AGE_AT_SEQ_REPORT=gsub("<18", "17",dat$AGE_AT_SEQ_REPORT)  
+dat$AGE_AT_SEQ_REPORT=gsub(">89", "90",dat$AGE_AT_SEQ_REPORT)  
+dat=subset(dat,AGE_AT_SEQ_REPORT!="Unknown")  
+dat$AGE_AT_SEQ_REPORT=as.numeric(as.character(dat$AGE_AT_SEQ_REPORT))  
+head(dat)  
+dim(dat)  
+
+#plot  
+table(dat$ONCOTREE_CODE)  
+ggplot(data=dat, aes(x=AGE_AT_SEQ_REPORT,fill = ONCOTREE_CODE)) + geom_histogram(bins = 50)  
+ggplot(data=dat, aes(x=AGE_AT_SEQ_REPORT,fill = SAMPLE_TYPE)) + geom_histogram(bins = 20)  
+
+```  
 
 
 
