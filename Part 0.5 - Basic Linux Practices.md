@@ -66,9 +66,9 @@ What is the difference between germline mutation and somatic mutation?
 *************************************************************
 
 **Documents**
-*Document:data_guide.pdf;  
-Sample information: data_clinical_patient.txt; data_clinical_sample.txt;  
-Mutation information: data_mutations_extended.txt;*  
+*Document:data_guide.pdf;*  
+*Sample information: data_clinical_patient.txt; data_clinical_sample.txt;*    [clinical format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#clinical-data)  
+*Mutation information: data_mutations_extended.txt;*  [MAF format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#mutation-data)  
 
 **Task 1: complete the following clinical form**  
 
@@ -77,10 +77,10 @@ summary the Primary tumor samples
 |  ----  | ----  |  ----  | ----  |
 | LUAD  | 7582 | 4682  | 2897 |
 | IDC  | 5669 | 5623  | 44 |
-| COAD  | 4089 | 单元格  | 单元格 |
-| PRAD  | 2233 | 单元格  | 单元格 |
-| PAAD  | 2105 | 单元格  | 单元格 |
-| BLAC  | 1494 | 单元格  | 单元格 |  
+| COAD  | 4089 |    |    |
+| PRAD  | 2233 |    |    |
+| PAAD  | 2105 |    |    |
+| BLAC  | 1494 |    |    | 
 
 *************************  
 points for discussion：  
@@ -103,7 +103,7 @@ points for discussion：
 
 ### Answer
 
-**Task 1 **
+**Task 1**  
 
 ```
 ##calculate the number of each cancer type  
