@@ -65,6 +65,7 @@ How to search/locate a target SNP?
 What is the difference between germline mutation and somatic mutation?  
 *************************************************************
 
+**Documents**
 *Document:data_guide.pdf;  
 Sample information: data_clinical_patient.txt; data_clinical_sample.txt;  
 Mutation information: data_mutations_extended.txt;*  
@@ -87,7 +88,7 @@ points for discussion：
 2. why the total number of femal and male not equal to the total size? how to deal with those extra samples?   
 *************************  
 
-**challenge 1: Will gender will impact the reported Age in those 6 types of cancer?  
+**challenge 1: Will gender will impact the reported Age in those 6 types of cancer?**  
 
 
 
