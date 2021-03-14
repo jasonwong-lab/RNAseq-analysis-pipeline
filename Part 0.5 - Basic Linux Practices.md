@@ -69,7 +69,60 @@ What is the difference between germline mutation and somatic mutation?
 Sample information: data_clinical_patient.txt; data_clinical_sample.txt;  
 Mutation information: data_mutations_extended.txt;*  
 
+**Task 1: complete the following clinical form**  
 
+summary the Primary tumor samples  
+|  Cancer Type  | total |  female   | male  |
+|  ----  | ----  |  ----  | ----  |
+| LUAD  | 7582 | 4682  | 2897 |
+| IDC  | 5669 | 5623  | 44 |
+| COAD  | 4089 | 单元格  | 单元格 |
+| PRAD  | 2233 | 单元格  | 单元格 |
+| PAAD  | 2105 | 单元格  | 单元格 |
+| BLAC  | 1494 | 单元格  | 单元格 |  
+
+*************************  
+points for discussion：  
+1. How to get all answers(from multi-cancer types) in one command line.  
+2. why the total number of femal and male not equal to the total size? how to deal with those extra samples?   
+*************************  
+
+**challenge 1: Will gender will impact the reported Age in those 6 types of cancer?  
+
+
+
+
+
+
+
+
+
+
+
+
+### Answer
+
+**Task 1 **
+
+```
+##calculate the number of each cancer type  
+grep "Primary tumor" data_clinical_sample.txt >Primary_tumor_tmp.txt
+cut -f 4 Primary_tumor_tmp.txt|sort|uniq -c|sort -rnk1|head  
+
+##merge sample data with patient data  
+awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt Primary_tumor_tmp.txt > Gender_tmp.txt  
+grep "LUAD" Gender_tmp.txt |cut -d " "  -f 5 |sort |uniq -c  
+
+##calculate the gender in one command line
+#cat CancernameList_tmp.txt 
+#LUAD  
+#IDC  
+#COAD  
+#PRAD  
+#PAAD  
+#BLCA  
+for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt Primary_tumor_tmp.txt |grep "$i" |cut -d " " -f 5|sort|uniq -c;done  
+```
 
 
 
