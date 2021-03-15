@@ -20,7 +20,7 @@ You can search and get to know some background knowledge before starting this pr
 Part 0: TCGA,cBIoportal,GEPIA2 application  
 
 ## Coding practices  
-Part 0.5: LINUX and practices
-Part I: RNA-seq analysis pipeline  
-Pert II: R + Differential expression analysis basic plots
+Part I: LINUX pactices & simple project.  
+Part II: RNA-seq analysis pipeline  
+Pert III: R + Differential expression analysis basic plots
 
