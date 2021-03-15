@@ -74,39 +74,37 @@ What is the difference between germline mutation and somatic mutation?
 
 **Task 1: complete the following clinical form**  
 
-summary the Primary tumor samples  
+summary the Primary & Metastasis tumor samples  
 |  Cancer Type  | total |  female   | male  |
 |  ----  | ----  |  ----  | ----  |
-| LUAD  | 7582 | 4682  | 2897 |
-| IDC  | 5669 | 5623  | 44 |
-| COAD  | 4089 |    |    |
-| PRAD  | 2233 |    |    |
-| PAAD  | 2105 |    |    |
+| LUAD  | 12533 | 7545  | 4978 |
+| IDC  | 8026 | 7545 | 63 |
+| COAD  | 6268 |    |    |
+| PRAD  | 3781 |    |    |
+| PAAD  | 3573 |    |    |
 
 *************************  
 points for discussion：  
 1. How to get all answers(from multi-cancer types) in one command line.  
 2. why the total number of female and male not equal to the total size? how to deal with those extra samples?    
 
-**challenge 1: Will the elder become riskier in getting specific cancer or getting metastasis?**  
-
+**challenge 1: Does LUAD patient has higher probability to get metastasis than other cancer type?**  
 *************************
 
   
   
   
-**Task 2: basic statistical analysis on mutation data**   
+**Task 2: SNP analysis on paired samples**  
 
-- Which gene with the most mutations?  
-- How many shared SNP(found in more than 1 sample) among all samples?  （take Tumor_Seq_Allele1 as allele)  
+ref: https://ascopubs-org.eproxy.lib.hku.hk/doi/full/10.1200/PO.19.00394 
+
+- What information can be used to locate one SNP?  
+- Find paired sample (Primary and Metastasis sample from the same patient)  
+- Do the metastasis sample always have more mutation than paired primary sample?  
 
 ***************************  
-
-**challenge 2: How is the Variant_Tpye distrubution among the top 10 most mutated genes?**  
+**challenge 2: Can you find some mutated gene signatures in metastasis cancer ?**    
 **********************
-
-
-
 
 
 
@@ -117,81 +115,56 @@ points for discussion：
 **Task 1**  
 
 ```
-##calculate the number of each cancer typ,remember to keep Primary tumor samples only.  (Variant_Tpye)
-grep -v "#" data_clinical_sample.txt |grep "Primary tumor" >Primary_tumor_tmp.txt
-cut -f 4 Primary_tumor_tmp.txt|sort|uniq -c|sort -rnk1|head  
+##calculate the number of each cancer typ,remember to keep tumor samples only.  (SAMPLE_TYPE)  
+awk '{if ($5=="Metastasis"||$5=="Primary") print $0}' data_clinical_sample.txt  >tumor_sample_tmp.txt  
+cut -f 4 tumor_sample_tmp.txt|sort|uniq -c|sort -rnk1|head  
 
-##merge sample data with patient data  
-awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt Primary_tumor_tmp.txt > Gender_tmp.txt  
+##merge sample information with patient information  
+awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt tumor_sample_tmp.txt > Gender_tmp.txt  
 grep "LUAD" Gender_tmp.txt |cut -d " "  -f 5 |sort |uniq -c  
 
-##calculate the gender in one command line
-#cat CancernameList_tmp.txt 
+##count the gender in one command line, CancernameList_tmp.txt file to list all CancerType that is gonna be analysis.
+#cat CancernameList_tmp.txt  
 #LUAD  
 #IDC  
 #COAD  
 #PRAD  
 #PAAD   
-#head -1 data_clinical_patient.txt
+#head -1 data_clinical_patient.txt  
 #Patient Identifier	Sex	Primary Race	Ethnicity Category	Center  
-#head -1 Primary_tumor_tmp.txt 
+#head -1 Primary_tumor_tmp.txt  
 #PATIENT_ID	SAMPLE_ID	AGE_AT_SEQ_REPORT	ONCOTREE_CODE	SAMPLE_TYPE	SEQ_ASSAY_ID	CANCER_TYPE	CANCER_TYPE_DETAILESAMPLE_TYPE_DETAILED 
-for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt Primary_tumor_tmp.txt |grep "$i" |cut -d " " -f 5|sort|uniq -c;done  
+for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt tumor_sample_tmp.txt |grep "$i" |cut -d " " -f 5|sort|uniq -c;done  
 ```  
 
-**Task 2**  
+**Task 2**   
 
 ```
-##keep "SNP" data only  
-grep "SNP" data_mutations_extended.txt >SNP_tmp.txt  
-
-##calculate mutation in each gene. In fact, the gene length should be considered as well （but not in here)  
-cut -f 1 SNP_tmp.txt |sort|uniq -c |sort -rnk1|head   
-
-#target SNP by position and Sample information only  
-cut -f 5,6,7,12,13,17 SNP_tmp.txt |wc -l  
-(727146)  
-#exclude the SNP from the same sample
-cut -f 5,6,7,12,13,17 SNP_tmp.txt |sort|uniq |wc -l  
-(727030)    
-#remove sample information, get all shared SNP.
-
-
+##keep "SNP" data and needed information only  
+grep "SNP" data_mutations_extended.txt |cut -f 5,6,12,13,14,17 > SNP_tmp.txt  
+wc -l SNP_tmp.txt   
+(727146)   
+   
+#merge sample information with mutation information.   
+awk -v OFS="(control+V+I)" 'NR==FNR{a[$2]=$1"(control+V+I)"$5}NR>FNR{print $0,a[$6]}'  data_clinical_sample.txt SNP_tmp.txt > SNP_Sampletype_tmp.txt   
+  
+#extract mutation in Primary Samples and in Metastasis Samples   
+grep "Primary" SNP_Sampletype_tmp.txt >SNP_Primary_tmp.txt   
+grep "Metastasis" SNP_Sampletype_tmp.txt >SNP_Metastasis_tmp.txt   
+  
+#find paired-samples   
+cut -f 7 SNP_Primary_tmp.txt |sort |uniq >Primary_patient_tmp.txt  
+cut -f 7 SNP_Metastasis_tmp.txt |sort |uniq >Metastasis_patient_tmp.txt  
+cat Primary_patient_tmp.txt Metastasis_patient_tmp.txt |sort|uniq -d >paired_patient_tmp.txt  
+for i in `cat paired_patient_tmp.txt`;do echo "$i";grep "$i" SNP_Sampletype_tmp.txt|cut -f 8|sort|uniq -c ;done|head  
+#GENIE-COLU-00191  
+#     18 Metastasis  
+#      2 Primary  
+#GENIE-COLU-00294  
+#      3 Metastasis  
+#      3 Primary  
+#...  
 ```
-
-**challenge 1**  
-```
-#in R  
-library(ggplot2)  
-
-#merge sample and patient information  
-sample <- as.data.frame(read.table("data_clinical_sample.txt",header = TRUE,sep = "\t", dec = ".",stringsAsFactors=FALSE,check.names = FALSE))   
-patients <- as.data.frame(read.table("data_clinical_patient.txt",header = TRUE,sep = "\t", dec = ".",stringsAsFactors=FALSE,check.names = FALSE))  
-dat<-merge(sample,patients[,c("PATIENT_ID","SEX")],by="PATIENT_ID",all.x=TRUE)  
-dim(dat)  
-
-#select target cancer type  
-#dat=subset(dat,ONCOTREE_CODE=="LUAD"|ONCOTREE_CODE=="IDC"|ONCOTREE_CODE=="COAD"|ONCOTREE_CODE=="PRAD"|ONCOTREE_CODE=="PAAD")  
-dat=subset(dat,ONCOTREE_CODE=="LUAD")  #take LUAD cancer as an example  
-dat$AGE_AT_SEQ_REPORT=gsub("<18", "17",dat$AGE_AT_SEQ_REPORT)  
-dat$AGE_AT_SEQ_REPORT=gsub(">89", "90",dat$AGE_AT_SEQ_REPORT)  
-dat=subset(dat,AGE_AT_SEQ_REPORT!="Unknown")  
-dat$AGE_AT_SEQ_REPORT=as.numeric(as.character(dat$AGE_AT_SEQ_REPORT))  
-head(dat)  
-dim(dat)  
-
-#plot  
-table(dat$ONCOTREE_CODE)  
-ggplot(data=dat, aes(x=AGE_AT_SEQ_REPORT,fill = ONCOTREE_CODE)) + geom_histogram(bins = 50)  
-ggplot(data=dat, aes(x=AGE_AT_SEQ_REPORT,fill = SAMPLE_TYPE)) + geom_histogram(bins = 20)  
-
-```  
-
-
-
-
-
-
 
 
 
