@@ -53,7 +53,7 @@ gunzip -d felCat9.refGene.gtf.gz
     
     
   
-## Analysis on a patient cohort.  
+## Project:Analysis on a patient cohort.  
 
 ### understand the data  (biomed1 server ~/data/fastq/Genie_9.0/)   
 
