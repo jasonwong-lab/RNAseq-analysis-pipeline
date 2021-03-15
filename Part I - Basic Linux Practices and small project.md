@@ -72,7 +72,7 @@ What is the difference between germline mutation and somatic mutation?
   
   
 
-**Task 1: complete the following clinical form**  
+### Task 1: complete the following clinical form  
 
 summary the Primary & Metastasis tumor samples  
 |  Cancer Type  | total |  female   | male  |
@@ -91,10 +91,12 @@ points for discussion：
 **challenge 1: Does LUAD patient has higher probability to get metastasis than other cancer type?**  
 *************************
 
+    
+      
+      
   
   
-  
-**Task 2: SNP analysis on paired samples**  
+### Task 2: SNP analysis on paired samples 
 
 ref: https://ascopubs-org.eproxy.lib.hku.hk/doi/full/10.1200/PO.19.00394 
 
