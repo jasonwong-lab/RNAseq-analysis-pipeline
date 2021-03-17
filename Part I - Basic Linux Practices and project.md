@@ -168,5 +168,5 @@ for i in `cat paired_patient_tmp.txt`;do echo "$i";grep "$i" SNP_Sampletype_tmp.
 #...  
 ```
 
-
+ 
 
