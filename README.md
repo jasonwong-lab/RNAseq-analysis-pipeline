@@ -24,3 +24,4 @@ Part I: LINUX pactices & simple project.
 Part II: RNA-seq analysis pipeline  
 Pert III: R + Differential expression analysis basic plots
 
+NOTICES: Part 0 I II III are independent modules, no need to do in turn or complete all practices.
