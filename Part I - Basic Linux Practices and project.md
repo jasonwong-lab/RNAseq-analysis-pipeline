@@ -78,8 +78,8 @@ summary the Primary & Metastasis tumor samples
 |  Cancer Type  | total |  female   | male  |
 |  ----  | ----  |  ----  | ----  |
 | LUAD  | 12533 | 7545  | 4978 |
-| IDC  | 8026 | 7545 | 63 |
-| COAD  | 6268 |    |    |
+| IDC  | 8026 | 7958 | 63 |
+| COAD  | 6268 | 2973   |  3289  |
 | PRAD  | 3781 |    |    |
 | PAAD  | 3573 |    |    |
 
