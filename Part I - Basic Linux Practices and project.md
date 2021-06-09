@@ -136,7 +136,7 @@ grep "LUAD" Gender_tmp.txt |cut -d " "  -f 5 |sort |uniq -c
 #Patient Identifier	Sex	Primary Race	Ethnicity Category	Center  
 #head -1 Primary_tumor_tmp.txt  
 #PATIENT_ID	SAMPLE_ID	AGE_AT_SEQ_REPORT	ONCOTREE_CODE	SAMPLE_TYPE	SEQ_ASSAY_ID	CANCER_TYPE	CANCER_TYPE_DETAILESAMPLE_TYPE_DETAILED 
-for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt tumor_sample_tmp.txt |grep "$i" |cut -d " " -f 5|sort|uniq -c;done  
+for i in `cat CancernameList_tmp.txt`;do echo "$i"; awk 'NR==FNR{a[$1]=$2}NR>FNR{print $1,$2,$3,$4,a[$1]}'  data_clinical_patient.txt tumor_sample_tmp.txt |grep "$i\s" |cut -d " " -f 5|sort|uniq -c;done  
 ```  
 
 **Task 2**   
